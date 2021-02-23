@@ -1,0 +1,64 @@
+# Default values for bookinfo-reviews.
+# This is a YAML-formatted file.
+
+# The overall system your service is a part of
+system: bookinfo
+# The name of your service
+service: reviews
+# The major version number for your service
+version: 1
+
+# Istio uses the service account name as a component of the service's security
+# identity. Set "create" to false to use an previously created service account.
+serviceAccount:
+  name: bookinfo-reviews
+  create: true
+
+# The number of pod replicas to run for your service
+replicaCount: 3
+# The maximum number of pods from that set that can be unavailable at once
+maxUnavailable: 1
+
+# Horizontal pod autoscaler configuration (optional)
+autoscaling:
+  minReplicas: 1
+  maxReplicas: 5
+  targetAverageCpuUtilization: 80
+
+# Docker settings
+image:
+  # The name of your docker container
+  repository: docker.io/istio/examples-bookinfo-reviews-v1
+  # Your docker container's tag
+  tag: 1.16.2
+  imagePullPolicy: IfNotPresent
+
+# Port settings
+# Ports must be named <protocol>[-<suffix>] to work with Istio.
+# Valid protocols are grpc, http, http2, https, mongo, mysql, redis, tcp, tls, udp
+ports:
+  - name: http
+    port: 9080
+    targetPort: 9080
+
+# Resource settings (use Kubernetes syntax)
+resources:
+  requests:
+    memory: "100Mi"
+    cpu: "200m"
+  limits:
+    memory: "1G"
+    cpu: "250M"
+
+# Probe settings (use Kubernetes syntax)
+probes:
+  livenessProbe:
+    initialDelaySeconds: 30
+    httpGet:
+      path: /health
+      port: 9080
+  readinessProbe:
+    timeoutSeconds: 10
+    httpGet:
+      path: /health
+      port: 9080
