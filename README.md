@@ -1,5 +1,7 @@
 # Script
 
+Presentation: <https://docs.google.com/presentation/d/19neNIPXJo83pDc26zrneypJ_SN96eLucFy8e6MIou4o/edit?usp=sharing>
+
 ## Initialize
 
 ```sh
